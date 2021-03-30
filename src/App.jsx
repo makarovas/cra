@@ -11,7 +11,8 @@ class App extends React.Component {
     averageResponseTime: null,
     isLoading: false,
     isError: false,
-    users: null
+    users: null,
+    listRequestDuration: []
   };
 
   handleRequestsChange = (event) => {
@@ -24,14 +25,21 @@ class App extends React.Component {
   fetchApi = async () => {
       while ( this.state.requestsToMake && !this.state.isError> 0) {
         try {
+
+          const request_start_at = performance.now();
           this.setState({isLoading: true});
           const response = await fetch(this.state.address)
           const json = await response.json();
+          const request_end_at = performance.now();
+          const request_duration = request_end_at - request_start_at;
+
           this.setState(prev => ({
             users: json, 
             isLoading: false,
             requestsToMake: prev.requestsToMake - 1,
             requestsMade: prev.requestsMade + 1,
+            averageResponseTime: this.counter(),
+            listRequestDuration: [...prev.listRequestDuration, request_duration]
           }))
         } catch (e) {
           this.setState({
@@ -63,6 +71,11 @@ class App extends React.Component {
      users: null
     })
    }
+
+   counter = () =>  this.state.listRequestDuration
+     .reduce((prev, curr) => (prev + curr) / this.state.requestsMade,[])
+    
+   
   
   render() {
     const {
@@ -119,8 +132,12 @@ class App extends React.Component {
                 </label>
               </div>
               <div className="app__line">
-                {'Average response time: '}
-                <b>{JSON.stringify(averageResponseTime)} </b>
+                 Average response time: 
+               <span>
+                <b>{`${averageResponseTime ? averageResponseTime : 'press start' } 
+                     ${averageResponseTime ?  'ms' : ''}`} 
+                </b>
+               </span>
               </div>
               <div className="app__line">
                 {`Requests made: ${requestsMade} of ${requestsToMake}`}
