@@ -8,7 +8,7 @@ class App extends React.Component {
     address: 'https://jsonplaceholder.typicode.com/users',
     requestsToMake: 30,
     requestsMade: 0,
-    averageResponseTime: null,
+    averageResponseTime: 0,
     isLoading: false,
     isError: false,
     users: null,
@@ -64,12 +64,12 @@ class App extends React.Component {
       averageResponseTime: null,
       isLoading: false,
       isError: false,
-     users: null
+      users: null
     })
    }
 
    counter = () =>  this.state.listRequestDuration
-     .reduce((prev, curr) => (prev + curr) / this.state.requestsMade,[])
+     .reduce((prev, curr) => (prev + curr) / this.state.requestsMade,0)
     
   render() {
     const {
