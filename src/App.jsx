@@ -19,7 +19,7 @@ class App extends React.Component {
     this.setState({requestsToMake: event.currentTarget.valueAsNumber});
 
   fetchApi = async () => {
-      while ( this.state.requestsToMake && !this.state.isError> 0) {
+      while ( !this.state.isError && (this.state.requestsToMake > 0)) {
         try {
 
           const request_start_at = performance.now();
