@@ -15,12 +15,8 @@ class App extends React.Component {
     listRequestDuration: []
   };
 
-  handleRequestsChange = (event) => {
-    let requestsToMake = event.currentTarget.valueAsNumber;
-    // requestsToMake = Math.min(requestsToMake, 500);
-    // requestsToMake = Math.max(requestsToMake, 0);
-    this.setState({requestsToMake});
-  };
+  handleRequestsChange = (event) => 
+    this.setState({requestsToMake: event.currentTarget.valueAsNumber});
 
   fetchApi = async () => {
       while ( this.state.requestsToMake && !this.state.isError> 0) {
@@ -75,8 +71,6 @@ class App extends React.Component {
    counter = () =>  this.state.listRequestDuration
      .reduce((prev, curr) => (prev + curr) / this.state.requestsMade,[])
     
-   
-  
   render() {
     const {
       address,
