@@ -21,7 +21,6 @@ class App extends React.Component {
   fetchApi = async () => {
       while ( !this.state.isError && (this.state.requestsToMake > 0)) {
         try {
-
           const request_start_at = performance.now();
           this.setState({isLoading: true});
           const response = await fetch(this.state.address)
@@ -84,26 +83,7 @@ class App extends React.Component {
     return (
       <>
           <div>
-            <div className="task">
-              Нужно рассчитать среднее время отклика от какого либо урла
-              <ul>
-                <li>
-                  Можно добавлять и использовать любые необходымие зависимости
-                </li>
-              </ul>
-              <ul>
-                <li>Address - поле для урла</li>
-                <li>Requests to make - количество запросов, которое мы сделаем</li>
-                <li>Average response time - среднее время отклика</li>
-                <li>Requests made - счетчик сделаных реквестов</li>
-                <li>Start! - кнопка старта для расчета</li>
-                <li>+ во время расчета форма должна дизейблиться</li>
-                <li>
-                  + если произошла ошибка, то нужно об этом сообщать, достаточно
-                  простого alert'а
-                </li>
-              </ul>
-            </div>
+          
             <div className="app">
               <div className="app__line">
                 <label>
